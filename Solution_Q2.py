@@ -1,3 +1,2 @@
-# Creating initial file
+# Solution Q2
 
-# Testing changes
