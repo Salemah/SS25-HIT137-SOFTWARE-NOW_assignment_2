@@ -54,4 +54,12 @@ def analyze_temp_data_folder(base_dir, folder_name="temperatures"):
                                     
     return station_all_temps, seasonal_collect
 
-# testing
+
+def find_each_season_average(base_dir, seasonal_data):
+    file_path = os.path.join(base_dir, "average_temp.txt")
+    with open(file_path, "w", encoding='utf-8') as f:
+        for season, temps in seasonal_data.items():
+            if temps:
+                avg = sum(temps) / len(temps)
+                f.write(f"{season}: {round(avg, 1)}°C\n")
+
