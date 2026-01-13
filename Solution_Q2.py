@@ -53,3 +53,5 @@ def analyze_temp_data_folder(base_dir, folder_name="temperatures"):
                                     continue 
                                     
     return station_all_temps, seasonal_collect
+
+# testing
