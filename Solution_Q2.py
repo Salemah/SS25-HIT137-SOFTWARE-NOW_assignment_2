@@ -86,3 +86,26 @@ def find_temperature_range(base_dir, station_data):
         for name in winners:
             d = details[name]
             f.write(f"Station {name}: Range {round(max_range, 1)}°C (Max: {d['max']}°C, Min: {d['min']}°C)\n")
+ 
+ 
+ 
+ def find_temp_stability(base_dir, station_data):
+    stability_metrics = {}
+    for name, temps in station_data.items():
+        if len(temps) < 2: continue
+        mean = sum(temps) / len(temps)
+        variance = sum((t - mean) ** 2 for t in temps) / len(temps)
+        stability_metrics[name] = math.sqrt(variance)
+
+    if not stability_metrics: return
+    min_std = min(stability_metrics.values())
+    max_std = max(stability_metrics.values())
+
+    file_path = os.path.join(base_dir, "temperature_stability_stations.txt")
+    with open(file_path, "w", encoding='utf-8') as f:
+        for name, val in stability_metrics.items():
+            if math.isclose(val, min_std, rel_tol=1e-7):
+                f.write(f"Most Stable: Station {name}: StdDev {round(val, 1)}°C\n")
+        for name, val in stability_metrics.items():
+            if math.isclose(val, max_std, rel_tol=1e-7):
+                f.write(f"Most Variable: Station {name}: StdDev {round(val, 1)}°C\n")
