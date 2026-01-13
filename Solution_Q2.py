@@ -89,7 +89,7 @@ def find_temperature_range(base_dir, station_data):
  
  
  
- def find_temp_stability(base_dir, station_data):
+def find_temp_stability(base_dir, station_data):
     stability_metrics = {}
     for name, temps in station_data.items():
         if len(temps) < 2: continue
@@ -109,7 +109,6 @@ def find_temperature_range(base_dir, station_data):
         for name, val in stability_metrics.items():
             if math.isclose(val, max_std, rel_tol=1e-7):
                 f.write(f"Most Variable: Station {name}: StdDev {round(val, 1)}°C\n")
-
 
 
 
