@@ -109,3 +109,23 @@ def find_temperature_range(base_dir, station_data):
         for name, val in stability_metrics.items():
             if math.isclose(val, max_std, rel_tol=1e-7):
                 f.write(f"Most Variable: Station {name}: StdDev {round(val, 1)}°C\n")
+
+
+
+
+# main function to generate files
+if __name__ == "__main__":
+    # Get the folder of the script base folder
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    
+    # data processing
+    stations, seasons = analyze_temp_data_folder(current_folder, "temperatures")
+
+    # Sving Reports
+    if stations:
+        find_each_season_average(current_folder, seasons)
+        find_temperature_range(current_folder, stations)
+        find_temp_stability(current_folder, stations)
+        print(f"Success! Files have been created")
+    else:
+        print("No data processed. Something Wrong !")
