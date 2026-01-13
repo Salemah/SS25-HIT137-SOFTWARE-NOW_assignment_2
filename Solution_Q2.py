@@ -63,3 +63,26 @@ def find_each_season_average(base_dir, seasonal_data):
                 avg = sum(temps) / len(temps)
                 f.write(f"{season}: {round(avg, 1)}°C\n")
 
+
+def find_temperature_range(base_dir, station_data):
+    max_range = -1.0
+    winners = []
+    details = {}
+
+    for name, temps in station_data.items():
+        if not temps: continue
+        
+        current_range = max(temps) - min(temps)
+        if current_range > max_range:
+            max_range = current_range
+            winners = [name]
+            details[name] = {'max': max(temps), 'min': min(temps)}
+        elif math.isclose(current_range, max_range, rel_tol=1e-7):
+            winners.append(name)
+            details[name] = {'max': max(temps), 'min': min(temps)}
+
+    file_path = os.path.join(base_dir, "largest_temp_range_station.txt")
+    with open(file_path, "w", encoding='utf-8') as f:
+        for name in winners:
+            d = details[name]
+            f.write(f"Station {name}: Range {round(max_range, 1)}°C (Max: {d['max']}°C, Min: {d['min']}°C)\n")
