@@ -3,7 +3,7 @@
 import os
 import csv
 import math
-# Here we have declared the months according to the questions
+# Here we have declared the months according to the question
 SEASONS = {
     "Summer": ["December", "January", "February"],
     "Autumn": ["March", "April", "May"],
